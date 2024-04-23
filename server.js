@@ -4,6 +4,7 @@ const mysql = require( "mysql" );
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
+const cors = require("cors")
 
 const app = express();
 app.use(
@@ -24,6 +25,7 @@ const connection = mysql.createConnection({
 
 // Serve static files from the default directory
 app.use(express.static(__dirname));
+app.use(cors)
 
 // Set up middleware to parse incoming JSON data
 app.use(express.json());
