@@ -38,6 +38,24 @@ connection.connect((err) => {
     console.error("Error connecting to MySQL: " + err.stack);
     return;
   }
+  async function createTables() {
+    const createUsersTable = `
+      CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        full_name VARCHAR(255)
+      )
+    `;
+    const createCoursesTable = `CREATE TABLE IF NOT EXISTS courses (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255)
+  )`;
+    await connection.query(createUsersTable);
+    await connection.query(createCoursesTable);
+  }
+  createTables();
   console.log("Connected to MySQL as id " + connection.threadId);
 });
 // Start server

@@ -6,7 +6,6 @@ const loginRoute = express.Router();
 
 loginRoute.post("/", (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password);
   // Retrieve user from database
   connection.query(
     "SELECT * FROM users WHERE username = ?",
