@@ -6,6 +6,7 @@ const registrationValidator = require("../utils/registrationValidator");
 const registerRoute = express.Router();
 
 registerRoute.post("/", [...registrationValidator], async (req, res) => {
+  console.log(req);
   // Check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -24,6 +25,7 @@ registerRoute.post("/", [...registrationValidator], async (req, res) => {
     full_name: req.body.full_name,
   };
 
+  console.log(newUser);
   // Insert user into MySQL
   User.createUser(newUser, (error, results, fields) => {
     if (error) {
@@ -35,4 +37,7 @@ registerRoute.post("/", [...registrationValidator], async (req, res) => {
   });
 });
 
+registerRoute.get("/", (req, res) => {
+  res.send("Hello World");
+});
 module.exports = registerRoute;

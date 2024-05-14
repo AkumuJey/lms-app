@@ -2,11 +2,12 @@
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const connection = require("./models/connection");
-const app = express();
 const cors = require("cors");
-app.use(cors());
+const { config } = require("dotenv");
 
+config();
+const app = express();
+app.use(cors());
 // Configure session middleware
 app.use(
   session({
@@ -24,6 +25,8 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const connection = require("./models/connection");
 
 // Define routes
 const indexRoute = require("./routes/indexRoute");

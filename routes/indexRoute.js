@@ -7,18 +7,22 @@ indexRoute.get("/", (req, res) => {
 });
 
 const registerRoute = require("./registerRoute");
-indexRoute.post("/register", registerRoute);
+indexRoute.use("/register", registerRoute);
 
 const loginRoute = require("./loginRoute");
 indexRoute.use("/login", loginRoute);
 
 const courseRoute = require("./coursesRoute");
-indexRoute.get("/courses", courseRoute);
+indexRoute.use("/courses", courseRoute);
 
 const logoutRoute = require("./logoutRoute");
-indexRoute.post("/logout", logoutRoute);
+indexRoute.use("/logout", logoutRoute);
 
 const dashboardRoute = require("./dashboardRoute");
-indexRoute.get("/dashboard", dashboardRoute);
+indexRoute.use("/dashboard", dashboardRoute);
+
+const practiceRoute = require("./practiceRoute");
+
+indexRoute.use("/mine", practiceRoute);
 
 module.exports = indexRoute;
