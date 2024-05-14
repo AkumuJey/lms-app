@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = formData.get('password');
         const email = formData.get('email');
         const full_name = formData.get('full_name');
+        console.log("clicked:", registerForm)
+        console.log("data:", {username, password, email, full_name})
         try {
             const response = await fetch('/register', {
                 method: 'POST',
