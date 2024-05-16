@@ -11,9 +11,12 @@ app.use(cors());
 // Configure session middleware
 app.use(
   session({
-    secret: "secret-key",
+    secret: process.env.SECRET_PHRASE,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 60000 * 60,
+    },
   })
 );
 

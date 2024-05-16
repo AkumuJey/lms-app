@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (response.ok) {
         alert("Login successful");
+        window.location.assign("/dashboard");
       } else {
         alert("Invalid username or password");
       }
@@ -84,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Check if the current page is the course content page
   if (window.location.pathname === "/dashboard") {
     //fetch Logged in user's full name
+    console.log("Hello");
     fetchFullName();
   }
 });
@@ -192,6 +194,7 @@ function fetchFullName() {
       return response.json();
     })
     .then((data) => {
+      console.log(data);
       // Display the user's full name on the dashboard
       displayFullName(data.fullName);
     })
@@ -201,8 +204,19 @@ function fetchFullName() {
 }
 
 function displayFullName(fullName) {
+  console.log(fullName);
   // Get the element where the full name will be displayed
   const fullNameElement = document.getElementById("user-fullname");
   // Set the inner HTML of the element to the user's full name
   fullNameElement.textContent = fullName;
 }
+
+const showName = async () => {
+  console.log("Hey");
+  // const fullName = (await fetch("/get-fullname")).json();
+  // console.log(fullName);
+  // const fullNameElement = document.getElementById("user-fullname");
+  // // Set the inner HTML of the element to the user's full name
+  // fullNameElement.textContent = fullName;
+  fetchFullName();
+};

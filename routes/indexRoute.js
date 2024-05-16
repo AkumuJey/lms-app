@@ -15,14 +15,16 @@ indexRoute.use("/login", loginRoute);
 const courseRoute = require("./coursesRoute");
 indexRoute.use("/courses", courseRoute);
 
+const authenticatedRoute = require("./authenticatedRoute");
 const logoutRoute = require("./logoutRoute");
 indexRoute.use("/logout", logoutRoute);
 
 const dashboardRoute = require("./dashboardRoute");
-indexRoute.use("/dashboard", dashboardRoute);
+indexRoute.use("/dashboard", authenticatedRoute, dashboardRoute);
 
+const getFullname = require("../routes/get-fullname");
+indexRoute.use("/get-fullname", authenticatedRoute, getFullname);
 const practiceRoute = require("./practiceRoute");
-
 indexRoute.use("/mine", practiceRoute);
 
 module.exports = indexRoute;
