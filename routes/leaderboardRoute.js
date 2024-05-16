@@ -7,7 +7,13 @@ leaderboardRoute.get("/", (req, res) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     }
-    res.status(200).json({ data: results });
+    if (req.accepts("json")) {
+      // Respond with JSON data
+      res.status(200).json(results);
+    } else {
+      // Respond with HTML page
+      res.render("leaderboard.html"); // Assuming you have a view engine set up
+    }
   });
 });
 module.exports = leaderboardRoute;

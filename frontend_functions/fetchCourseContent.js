@@ -19,3 +19,26 @@ function fetchCourseContent() {
       console.error("Error fetching course content:", error);
     });
 }
+
+function displayCourseContent(courseContent) {
+  // Get the course name element
+  const courseNameElement = document.getElementById("course-name");
+  // Set the course name
+  courseNameElement.textContent = courseContent.name;
+
+  // Get the course content element
+  const courseContentElement = document.getElementById("course-content");
+  // Clear previous content
+  courseContentElement.innerHTML = "";
+
+  // Loop through the modules and display them
+  courseContent.modules.forEach((module) => {
+    const moduleSection = document.createElement("section");
+    moduleSection.innerHTML = `
+            <h2>${module.title}</h2>
+            <p>${module.description}</p>
+            <!-- Add more elements as needed (e.g., videos, quizzes) -->
+        `;
+    courseContentElement.appendChild(moduleSection);
+  });
+}
