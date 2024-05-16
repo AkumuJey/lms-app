@@ -21,9 +21,11 @@ indexRoute.use("/logout", logoutRoute);
 
 const dashboardRoute = require("./dashboardRoute");
 indexRoute.use("/dashboard", authenticatedRoute, dashboardRoute);
-
+const leaderboardRoute = require("./leaderboardRoute");
+indexRoute.use("/leaderboard", leaderboardRoute);
 const getFullname = require("../routes/get-fullname");
 indexRoute.use("/get-fullname", authenticatedRoute, getFullname);
+
 const practiceRoute = require("./practiceRoute");
 indexRoute.use("/mine", practiceRoute);
 

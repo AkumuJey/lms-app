@@ -24,14 +24,6 @@ const User = {
       callback
     );
   },
-  // addUserCourse: function (userId, courseIds, callback) {
-  //   const newUserCourses = courseIds.map((courseId) => ({ userId, courseId }));
-  //   connection.query(
-  //     `INSERT INTO ${this.userCourseTable} SET ?`,
-  //     newUserCourses,
-  //     callback
-  //   );
-  // },
 
   addUserCourse: function (userId, courseIds, callback) {
     courseIds.forEach((courseId) => {

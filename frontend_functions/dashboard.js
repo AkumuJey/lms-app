@@ -33,12 +33,7 @@ coursesForm.addEventListener("submit", async (e) => {
         selectedCoursesIds,
       }),
     });
-    if (response.ok) {
-      console.log(response);
-      alert("Added Successful");
-    } else {
-      alert("Failed");
-    }
+    window.location.href = "/leaderboard";
   } catch (error) {
     alert("failed");
     console.log(error);
@@ -52,3 +47,11 @@ const showName = async () => {
   fetchFullName();
   populateCheckBox(coursesData.data);
 };
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const coursesData = await fetch("/courses").then((response) =>
+    response.json()
+  );
+  fetchFullName();
+  populateCheckBox(coursesData.data);
+});
