@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: JSON.stringify({ username, password, email, full_name }),
       });
-      console.log(response);
       if (response.ok) {
         alert("Registration successful");
       } else {

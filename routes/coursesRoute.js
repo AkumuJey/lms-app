@@ -17,17 +17,20 @@ const authenticatedRoute = require("./authenticatedRoute");
 const User = require("../models/User");
 courseRoute.post("/", authenticatedRoute, (req, res) => {
   const { selectedCoursesIds } = req.body;
-  const user = req.session.user;
   const { id } = req.session.user;
-  console.log(req.session.user);
-  User.addUserCourse(id, selectedCoursesIds, (error, results, fields) => {
-    console.log(results[0]);
-    if (error) {
-      console.log(error);
-      return res.status(400).json({ message: error.message });
-    }
-    return res.status(201).json({ data: results[0] });
-  });
+  try {
+    console.log(selectedCoursesIds);
+    User.addUserCourse(id, selectedCoursesIds, (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(201);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ failed });
+  }
 });
 
 courseRoute.get("/:id", authenticatedRoute, (req, res) => {

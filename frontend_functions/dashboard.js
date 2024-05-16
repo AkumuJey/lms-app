@@ -17,10 +17,32 @@ function populateCheckBox(coursesData) {
 
 const coursesForm = document.getElementById("courses-selection");
 
-coursesForm.addEventListener("submit", (e) => {
+coursesForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(coursesForm);
   console.log(formData.getAll("courses"));
+  const selectedCoursesIds = formData.getAll("courses");
+  console.log(selectedCoursesIds);
+  try {
+    const response = await fetch("/courses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        selectedCoursesIds,
+      }),
+    });
+    if (response.ok) {
+      console.log(response);
+      alert("Added Successful");
+    } else {
+      alert("Failed");
+    }
+  } catch (error) {
+    alert("failed");
+    console.log(error);
+  }
 });
 
 const showName = async () => {
