@@ -24,6 +24,15 @@
         <p>Welcome to your personalized dashboard.</p>
         <button onclick="showName()">Show name</button>
       </section>
+      <section>
+        <label for="courses-selection">Select a course:</label>
+        <br />
+        <form action="POST" id="courses-selection">
+          <div id="course-options"></div>
+          <br />
+          <button type="submit">Sava Courses</button>
+        </form>
+      </section>
     </main>
     <footer>
       <p>&copy; 2024 Your LMS</p>
@@ -31,5 +40,7 @@
 
     <!-- Include your client-side JavaScript file -->
     <script src="script.js"></script>
+    <script src="./frontend_functions/dashboard.js"></script>
+    <script src="./frontend_functions/fetchDisplayName.js"></script>
   </body>
 </html>

@@ -22,7 +22,6 @@ loginRoute.post("/", (req, res) => {
           if (isMatch) {
             // Store user in session
             req.session.user = user;
-            console.log(req.session);
             // res.send("Login successful");
             Courses.getCourses((err, rows, fieldData) => {
               if (err) {

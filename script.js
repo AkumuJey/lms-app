@@ -44,8 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ username, password }),
       });
       if (response.ok) {
-        alert("Login successful");
-        window.location.assign("/dashboard");
+        window.location.href = "/dashboard";
       } else {
         alert("Invalid username or password");
       }
@@ -184,39 +183,18 @@ function displayLeaderboardData(leaderboardData) {
   leaderboardElement.appendChild(table);
 }
 
-function fetchFullName() {
-  // Make AJAX request to fetch the user's full name from the server
-  fetch("/get-fullname")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      // Display the user's full name on the dashboard
-      displayFullName(data.fullName);
-    })
-    .catch((error) => {
-      console.error("Error fetching user full name:", error);
-    });
-}
+const coursesForm = document.getElementById("courses-selection");
 
-function displayFullName(fullName) {
-  console.log(fullName);
-  // Get the element where the full name will be displayed
-  const fullNameElement = document.getElementById("user-fullname");
-  // Set the inner HTML of the element to the user's full name
-  fullNameElement.textContent = fullName;
-}
+coursesForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(coursesForm);
+  console.log(formData.getAll("courses"));
+});
 
 const showName = async () => {
-  console.log("Hey");
-  // const fullName = (await fetch("/get-fullname")).json();
-  // console.log(fullName);
-  // const fullNameElement = document.getElementById("user-fullname");
-  // // Set the inner HTML of the element to the user's full name
-  // fullNameElement.textContent = fullName;
+  const coursesData = await fetch("/courses").then((response) =>
+    response.json()
+  );
   fetchFullName();
+  populateCheckBox(coursesData.data);
 };
