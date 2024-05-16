@@ -24,13 +24,21 @@ const User = {
       callback
     );
   },
+  // addUserCourse: function (userId, courseIds, callback) {
+  //   const newUserCourses = courseIds.map((courseId) => ({ userId, courseId }));
+  //   connection.query(
+  //     `INSERT INTO ${this.userCourseTable} SET ?`,
+  //     newUserCourses,
+  //     callback
+  //   );
+  // },
+
   addUserCourse: function (userId, courseIds, callback) {
-    const newUserCourses = courseIds.map((courseId) => ({ userId, courseId }));
-    connection.query(
-      `INSERT INTO ${this.userCourseTable} SET ?`,
-      newUserCourses,
-      callback
-    );
+    courseIds.forEach((courseId) => {
+      const query = "INSERT INTO ?? (user_id, course_id) VALUES (?, ?)";
+      const values = [this.userCourseTable, userId, courseId];
+      connection.query(query, values, callback);
+    });
   },
 };
 

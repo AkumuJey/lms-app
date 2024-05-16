@@ -182,19 +182,3 @@ function displayLeaderboardData(leaderboardData) {
   // Append the table to the leaderboard element
   leaderboardElement.appendChild(table);
 }
-
-const coursesForm = document.getElementById("courses-selection");
-
-coursesForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const formData = new FormData(coursesForm);
-  console.log(formData.getAll("courses"));
-});
-
-const showName = async () => {
-  const coursesData = await fetch("/courses").then((response) =>
-    response.json()
-  );
-  fetchFullName();
-  populateCheckBox(coursesData.data);
-};
