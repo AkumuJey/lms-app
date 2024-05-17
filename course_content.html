@@ -1,30 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Course Content</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Include your CSS file -->
+  </head>
+  <body>
     <header>
-        <h1 id="course-name">Course Name</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/course-content">Course Content</a></li>
-                <!-- Add more navigation links as needed -->
-            </ul>
-        </nav>
+      <h1 id="course-name">Course Name</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <div></div>
+        </ul>
+      </nav>
     </header>
-    <main id="course-content">
-        <!-- Course content will be dynamically populated here -->
+    <main>
+      <h2 class="course-name"></h2>
+      <div id="course-content"></div>
+      <!-- Course content will be dynamically populated here -->
     </main>
     <footer>
-        <p>&copy; 2024 Your LMS</p>
+      <p>&copy; 2024 Your LMS</p>
     </footer>
+    <script>
+      async function fetchCourseContent() {
+        // Get course ID from URL parameter (assuming course ID is passed in the URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get("id");
+        // Make AJAX request to fetch course content from server
+        fetch(`/courses/${courseId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Display course content on the page
+            displayCourseContent(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching course content:", error);
+          });
+      }
+      function displayCourseContent(courseContents) {
+        // Get the course content element
+        const courseContentElement = document.getElementById("course-content");
+        // Clear previous content
+        courseContentElement.innerHTML = "";
+        const moduleSection = document.createElement("section");
+        moduleSection.innerHTML = `
+            <h2>${courseContents.name}</h2>
+            <p>${courseContents.description}</p>
+            <!-- Add more elements as needed (e.g., videos, quizzes) -->
+        `;
+        courseContentElement.appendChild(moduleSection);
+      }
 
-    <!-- Include your client-side JavaScript file -->
-    <script src="script.js"></script>
-</body>
+      document.addEventListener("DOMContentLoaded", async () => {
+        await fetchCourseContent();
+      });
+    </script>
+  </body>
 </html>

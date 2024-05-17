@@ -53,8 +53,22 @@ const fetchUserCourses = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log("This: ", data);
-      // displayUserCourses();
+      const courses = data.rows;
+      console.log(courses);
+      displayUserCourses(courses);
     });
+};
+
+const displayUserCourses = (courses) => {
+  const courseListDiv = document.getElementById("user_courses");
+  // Iterate over the courses and create links
+  courses.forEach((course) => {
+    const courseDiv = document.createElement("user_courses");
+    courseDiv.innerHTML = `
+        <li><a href="dashboard/${course.id}"> ${course.name} </a></li>
+      `;
+    courseListDiv.appendChild(courseDiv);
+  });
 };
 
 document.addEventListener("DOMContentLoaded", async () => {

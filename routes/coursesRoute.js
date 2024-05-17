@@ -1,7 +1,9 @@
 const express = require("express");
 const Courses = require("../models/Courses");
+
+const connection = require("../models/connection");
 const courseRoute = express.Router();
-const authenticatedRoute = require("./authenticatedRoute");
+
 courseRoute.get("/", async (req, res) => {
   const { id } = req.session.user;
   Courses.getCourses(id, (err, rows, fieldData) => {
@@ -54,7 +56,7 @@ courseRoute.get("/:id", (req, res) => {
       throw err;
     }
     // Send course content as JSON response
-    res.json(result);
+    res.json(result[0]);
   });
 });
 
