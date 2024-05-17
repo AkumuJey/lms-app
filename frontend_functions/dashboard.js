@@ -48,10 +48,20 @@ const showName = async () => {
   populateCheckBox(coursesData.data);
 };
 
+const fetchUserCourses = () => {
+  fetch("/courses/user-courses")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("This: ", data);
+      // displayUserCourses();
+    });
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
   const coursesData = await fetch("/courses").then((response) =>
     response.json()
   );
   fetchFullName();
   populateCheckBox(coursesData.data);
+  await fetchUserCourses();
 });

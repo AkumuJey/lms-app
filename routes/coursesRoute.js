@@ -1,9 +1,10 @@
 const express = require("express");
 const Courses = require("../models/Courses");
 const courseRoute = express.Router();
-
+const authenticatedRoute = require("./authenticatedRoute");
 courseRoute.get("/", async (req, res) => {
-  Courses.getCourses((err, rows, fieldData) => {
+  const { id } = req.session.user;
+  Courses.getCourses(id, (err, rows, fieldData) => {
     if (err) {
       console.log(err);
       res.status(400).json({ err });
@@ -13,9 +14,8 @@ courseRoute.get("/", async (req, res) => {
   });
 });
 
-const authenticatedRoute = require("./authenticatedRoute");
 const User = require("../models/User");
-courseRoute.post("/", authenticatedRoute, (req, res) => {
+courseRoute.post("/", (req, res) => {
   const { selectedCoursesIds } = req.body;
   const { id } = req.session.user;
   try {
@@ -32,8 +32,21 @@ courseRoute.post("/", authenticatedRoute, (req, res) => {
     res.status(400).send({ failed });
   }
 });
-
-courseRoute.get("/:id", authenticatedRoute, (req, res) => {
+courseRoute.get("/user-courses", (req, res) => {
+  const { id } = req.session.user;
+  try {
+    User.getUserCourses(id, (err, rows, fieldData) => {
+      if (err) {
+        return res.status(400).json({ message: err.message });
+      }
+      res.status(201).json({ rows });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Failed" });
+  }
+});
+courseRoute.get("/:id", (req, res) => {
   const courseId = req.params.id;
   const sql = "SELECT * FROM courses WHERE id = ?";
   connection.query(sql, [courseId], (err, result) => {

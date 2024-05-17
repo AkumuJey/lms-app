@@ -32,6 +32,12 @@ const User = {
       connection.query(query, values, callback);
     });
   },
+  getUserCourses: function (userId, callback) {
+    const query = `
+    SELECT courses.id, name, description FROM courses INNER JOIN ${this.userCourseTable} ON courses.id = ${this.userCourseTable}.course_id WHERE ${this.userCourseTable}.user_id = ?
+    `;
+    connection.query(query, [userId], callback);
+  },
 };
 
 module.exports = User;

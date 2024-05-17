@@ -1,7 +1,6 @@
 const express = require("express");
 
 const indexRoute = express.Router();
-
 indexRoute.get("/", (req, res) => {
   res.sendFile(__dirname + "../index.html");
 });
@@ -11,11 +10,11 @@ indexRoute.use("/register", registerRoute);
 
 const loginRoute = require("./loginRoute");
 indexRoute.use("/login", loginRoute);
+const authenticatedRoute = require("./authenticatedRoute");
 
 const courseRoute = require("./coursesRoute");
-indexRoute.use("/courses", courseRoute);
+indexRoute.use("/courses", authenticatedRoute, courseRoute);
 
-const authenticatedRoute = require("./authenticatedRoute");
 const logoutRoute = require("./logoutRoute");
 indexRoute.use("/logout", logoutRoute);
 
